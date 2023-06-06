@@ -1,4 +1,5 @@
 const redis = require("redis");
+const EXPIRY_TIME_IN_SECONDS = 60 * 60;
 const client = redis.createClient({
   port: "6379",
   host: "localhost",
@@ -34,8 +35,18 @@ module.exports.set = (key, value) => {
   return "done";
 };
 
+module.exports.hset = (key, field, value) => {
+  client.hSet(key, field, value);
+  client.expire(key, EXPIRY_TIME_IN_SECONDS);
+  return "done";
+};
+
 module.exports.get = (key) => {
   return client.get(key);
+};
+
+module.exports.hgetAll = (key) => {
+  return client.HGETALL(key);
 };
 
 module.exports.close = () => {
