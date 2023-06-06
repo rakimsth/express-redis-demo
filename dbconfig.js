@@ -3,13 +3,13 @@ const EXPIRY_TIME_IN_SECONDS = 60 * 60;
 const client = redis.createClient({
   port: "6379",
   host: "localhost",
-  // password  : 'redispassword',
+  password: "",
 });
 
 client.connect().catch(console.error);
 
 client.on("connect", function () {
-  console.log("Redis Database connected" + "\n");
+  console.log("Redis Database connected");
 });
 
 client.on("reconnecting", function () {
